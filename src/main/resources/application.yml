@@ -1,0 +1,12 @@
+server:
+  port: 8080
+mitmproxy:
+  port: 8088
+  path: /usr/bin/mitmproxy
+  store:
+    active: false
+    path: requests/
+cache:
+  expireSec: 300
+  maxSize: 100
+  cleanupPeriodSec: 10

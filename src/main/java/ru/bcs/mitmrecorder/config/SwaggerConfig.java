@@ -1,4 +1,4 @@
-package ru.bcs.requestrecorder.config;
+package ru.bcs.mitmrecorder.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +21,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("ru.bcs.requestrecorder"))
+                .apis(RequestHandlerSelectors.basePackage("ru.bcs.mitmrecorder"))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo())

@@ -56,7 +56,7 @@ dependencies {
 cobertura {
     coverageFormats = ['xml']
     coverageIgnoreTrivial = true
-    coverageIncludes = ['.*ru.bcs.requestrecorder*']
+    coverageIncludes = ['.*ru.bcs.mitmrecorder*']
     coverageExcludes = ['.*\\.package-info.*', '.*\\.R.*', '.*BuildConfig.*', '.*\\$.*']
     coverageReportDir = new File("$buildDir/reports/cobertura")
 }

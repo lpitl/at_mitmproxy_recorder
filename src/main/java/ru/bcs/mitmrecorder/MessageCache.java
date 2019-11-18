@@ -1,4 +1,4 @@
-package ru.bcs.requestrecorder;
+package ru.bcs.mitmrecorder;
 
 import lombok.Data;
 

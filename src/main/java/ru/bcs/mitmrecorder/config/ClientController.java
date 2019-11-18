@@ -1,4 +1,4 @@
-package ru.bcs.requestrecorder.config;
+package ru.bcs.mitmrecorder.config;
 
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import ru.bcs.requestrecorder.MessageCache;
-import ru.bcs.requestrecorder.MitmInterceptedMessage;
+import ru.bcs.mitmrecorder.MessageCache;
+import ru.bcs.mitmrecorder.MitmInterceptedMessage;
 
 @Api(tags = { "client" })
 @RestController

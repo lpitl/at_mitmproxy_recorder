@@ -1,10 +1,10 @@
-package ru.bcs.requestrecorder.config;
+package ru.bcs.mitmrecorder.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.bcs.requestrecorder.MessageCache;
-import ru.bcs.requestrecorder.MitmInterceptedMessage;
+import ru.bcs.mitmrecorder.MessageCache;
+import ru.bcs.mitmrecorder.MitmInterceptedMessage;
 
 @Configuration
 public class MessageCacheConfiguration {

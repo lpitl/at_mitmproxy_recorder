@@ -12,7 +12,7 @@ env:
   global:
     - COMMIT=${TRAVIS_COMMIT::7}
 
-script: "gradle cobertura"
+script: "./gradlew cobertura"
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

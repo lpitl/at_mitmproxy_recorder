@@ -1,3 +1,5 @@
-FROM tomcat:8.0
+FROM tomcat:8.5.16-jre8-alpine
 MAINTAINER Petr Molokotin <lpitl@mail.ru>
-COPY ./build/libs/at-mitmproxy-recorder.war /usr/local/tomcat/webapps/
+EXPOSE 8080
+COPY at-mitmproxy-recorder.war /usr/local/tomcat/webapps/
+CMD ["catalina.sh", "run"]

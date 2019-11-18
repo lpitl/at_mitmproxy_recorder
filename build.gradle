@@ -3,6 +3,7 @@ buildscript {
         springBootVersion = '2.2.0.RELEASE'
         lombokVersion = '1.18.8'
         coreLibraryVersion = '15.11.2019'
+        swaggerVersion = '2.9.2'
     }
     repositories {
         mavenCentral()
@@ -18,7 +19,7 @@ apply plugin: 'io.spring.dependency-management'
 apply plugin: 'war'
 
 group = 'ru.bcs'
-version = '0.1'
+version = '0.2'
 sourceCompatibility = 1.8
 
 repositories {
@@ -39,6 +40,9 @@ dependencies {
 
     annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
     compileOnly("org.projectlombok:lombok:${lombokVersion}")
+
+    compile("io.springfox:springfox-swagger2:${swaggerVersion}")
+    compile("io.springfox:springfox-swagger-ui:${swaggerVersion}")
 
     compile("ru.bcs:at-library-core:${coreLibraryVersion}") {
         transitive = false

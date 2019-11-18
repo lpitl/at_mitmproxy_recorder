@@ -12,4 +12,5 @@ public class RequestRecorderApplication {
         ConfigurableApplicationContext context = SpringApplication.run(RequestRecorderApplication.class, args);
         context.getBean(MitmproxyConfiguration.class).startProxy();
     }
+
 }

@@ -21,6 +21,7 @@ apply plugin: 'war'
 group = 'ru.bcs'
 version = '0.2'
 sourceCompatibility = 1.8
+war.enabled = true
 
 repositories {
     mavenCentral()
@@ -53,4 +54,3 @@ dependencies {
     }
 
 }
-

@@ -9,8 +9,8 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'net.saliman:gradle-cobertura-plugin:3.0.0'
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath 'net.saliman:gradle-cobertura-plugin:3.0.0'
     }
 }
 
@@ -51,4 +51,12 @@ dependencies {
         all*.exclude module : 'spring-boot-starter-logging'
     }
 
+}
+
+cobertura {
+    coverageFormats = ['xml']
+    coverageIgnoreTrivial = true
+    coverageIncludes = ['.*ru.bcs.requestrecorder*']
+    coverageExcludes = ['.*\\.package-info.*', '.*\\.R.*', '.*BuildConfig.*', '.*\\$.*']
+    coverageReportDir = new File("$buildDir/reports/cobertura")
 }

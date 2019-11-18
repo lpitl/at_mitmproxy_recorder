@@ -45,10 +45,6 @@ dependencies {
     compile("io.springfox:springfox-swagger2:${swaggerVersion}")
     compile("io.springfox:springfox-swagger-ui:${swaggerVersion}")
 
-    compile("ru.bcs:at-library-core:${coreLibraryVersion}") {
-        transitive = false
-    }
-
     configurations {
         all*.exclude module : 'spring-boot-starter-logging'
     }

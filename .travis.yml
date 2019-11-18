@@ -5,6 +5,7 @@ services:
   - docker
 
 language: java
+dist: trusty
 jdk: oraclejdk8
 
 env:

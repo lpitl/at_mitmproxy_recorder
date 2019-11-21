@@ -120,6 +120,13 @@ public class MessageCache<K, T> {
         }
     }
 
+    // REMOVE ALL method
+    public void removeAll() {
+        synchronized (cacheMap) {
+            cacheMap.clear();
+        }
+    }
+
     // Get Cache Objects Size()
     public int size() {
         synchronized (cacheMap) {

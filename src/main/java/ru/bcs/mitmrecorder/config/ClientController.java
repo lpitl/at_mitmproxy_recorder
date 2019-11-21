@@ -2,10 +2,9 @@ package ru.bcs.mitmrecorder.config;
 
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import ru.bcs.mitmrecorder.MessageCache;
 import ru.bcs.mitmrecorder.MitmInterceptedMessage;
 
@@ -17,11 +16,25 @@ public class ClientController {
     private MessageCache<String, MitmInterceptedMessage> messageCache;
 
     @GetMapping("/last")
-    public @ResponseBody MitmInterceptedMessage getLastMessage(@RequestParam(value = "key", defaultValue = "") String key) {
+    public @ResponseBody ResponseEntity<MitmInterceptedMessage> getLastMessage(@RequestParam(value = "key", defaultValue = "") String key) {
+        MitmInterceptedMessage mitmInterceptedMessage;
+
         if (!key.isEmpty()) {
-            return messageCache.getLastByKeyPart(key);
+            mitmInterceptedMessage = messageCache.getLastByKeyPart(key);
+        } else {
+            mitmInterceptedMessage = messageCache.getLast();
         }
-        return messageCache.getLast();
+
+        if (mitmInterceptedMessage != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(mitmInterceptedMessage);
+        } else {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        }
+    }
+
+    @DeleteMapping("/clean")
+    public void cleanMessageCache() {
+        messageCache.removeAll();
     }
 
 }

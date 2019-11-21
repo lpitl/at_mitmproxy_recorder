@@ -1,8 +1,8 @@
 server:
   port: 8080
 mitmproxy:
-  port: 8088
-  path: /usr/bin/mitmproxy
+  port: ${MITMPROXY_PORT:8088}
+  path: ${MITMPROXY_PATH:/usr/bin/mitmproxy}
   store:
     active: false
     path: requests/

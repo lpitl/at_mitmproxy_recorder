@@ -2,7 +2,6 @@ buildscript {
     ext {
         springBootVersion = '2.2.0.RELEASE'
         lombokVersion = '1.18.8'
-        coreLibraryVersion = '15.11.2019'
         swaggerVersion = '2.9.2'
     }
     repositories {
@@ -21,7 +20,7 @@ apply plugin: 'war'
 apply plugin: 'cobertura'
 
 group = 'ru.bcs'
-version = '0.2'
+version = '0.3'
 sourceCompatibility = 1.8
 war.enabled = true
 

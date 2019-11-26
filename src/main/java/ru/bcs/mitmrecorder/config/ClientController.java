@@ -40,8 +40,14 @@ public class ClientController {
     }
 
     @GetMapping("/all")
-    public @ResponseBody ResponseEntity<List<MitmInterceptedMessage>> getAllMessages() {
-        List<MitmInterceptedMessage> mitmInterceptedMessageList = messageCache.getAll();
+    public @ResponseBody ResponseEntity<List<MitmInterceptedMessage>> getAllMessages(@RequestParam(value = "key", defaultValue = "") String key) {
+        List<MitmInterceptedMessage> mitmInterceptedMessageList;
+
+        if (!key.isEmpty()) {
+            mitmInterceptedMessageList = messageCache.getAllByKeyPart(key);
+        } else {
+            mitmInterceptedMessageList = messageCache.getAll();
+        }
 
         if (mitmInterceptedMessageList != null && mitmInterceptedMessageList.size() > 0) {
             return ResponseEntity.status(HttpStatus.OK).body(mitmInterceptedMessageList);

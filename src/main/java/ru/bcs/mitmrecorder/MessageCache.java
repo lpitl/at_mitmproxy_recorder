@@ -132,6 +132,31 @@ public class MessageCache<K, T> {
 
     // GET method
     @SuppressWarnings("unchecked")
+    public List<T> getAllByKeyPart(K keyPart) {
+        synchronized (cacheMap) {
+            if (cacheMap.size() < 1) {
+                return null;
+            }
+            List<T> all = new ArrayList<>();
+            for (Entry<K, MessageCacheObject<T>> messageCacheObjectEntry : cacheMap.entrySet()) {
+                if (messageCacheObjectEntry.getKey() instanceof String && keyPart instanceof String) {
+                    if (!((String) messageCacheObjectEntry.getKey()).contains((String) keyPart)) {
+                        continue;
+                    }
+                } else {
+                    if (!messageCacheObjectEntry.getKey().toString().contains(keyPart.toString())) {
+                        continue;
+                    }
+                }
+                all.add(messageCacheObjectEntry.getValue().value);
+                messageCacheObjectEntry.getValue().lastAccessed = System.currentTimeMillis();
+            }
+            return all;
+        }
+    }
+
+    // GET method
+    @SuppressWarnings("unchecked")
     public String getList() {
         synchronized (cacheMap) {
             if (cacheMap.size() < 1) {

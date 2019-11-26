@@ -20,7 +20,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeoutException;
 
 @Configuration
-public class MitmproxyConfiguration {
+public class MitmproxyListenerConfiguration {
 
     @Autowired
     private MessageCache messageCache;
@@ -38,7 +38,7 @@ public class MitmproxyConfiguration {
     private String storePath;
 
     @Bean
-    MitmproxyJava mitmproxyInitializeAndRun() throws IOException, TimeoutException {
+    MitmproxyJava mitmproxyListener() throws IOException, TimeoutException {
         MitmproxyJava proxy = new MitmproxyJava(mitmproxyPath, (InterceptedMessage message) -> {
             System.out.println("Intercepted request for " + message.getRequest().getUrl());
 

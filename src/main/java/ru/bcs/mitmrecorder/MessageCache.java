@@ -5,6 +5,7 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map.Entry;
 
 public class MessageCache<K, T> {
@@ -92,7 +93,7 @@ public class MessageCache<K, T> {
         synchronized (cacheMap) {
             K foundKey = null;
             for (K key : cacheMap.keySet()) {
-                if (key instanceof String) {
+                if (key instanceof String && keyPart instanceof String) {
                     if (((String) key).contains((String) keyPart)) {
                         foundKey = key;
                     }
@@ -110,6 +111,68 @@ public class MessageCache<K, T> {
                 c.lastAccessed = System.currentTimeMillis();
                 return (T) c.value;
             }
+        }
+    }
+
+    // GET method
+    @SuppressWarnings("unchecked")
+    public List<T> getAll() {
+        synchronized (cacheMap) {
+            if (cacheMap.size() < 1) {
+                return null;
+            }
+            List<T> all = new ArrayList<>();
+            for (Entry<K, MessageCacheObject<T>> messageCacheObjectEntry : cacheMap.entrySet()) {
+                all.add(messageCacheObjectEntry.getValue().value);
+                messageCacheObjectEntry.getValue().lastAccessed = System.currentTimeMillis();
+            }
+            return all;
+        }
+    }
+
+    // GET method
+    @SuppressWarnings("unchecked")
+    public String getList() {
+        synchronized (cacheMap) {
+            if (cacheMap.size() < 1) {
+                return null;
+            }
+            StringBuilder list = new StringBuilder();
+            for (Entry<K, MessageCacheObject<T>> messageCacheObjectEntry : cacheMap.entrySet()) {
+                MitmInterceptedMessage mitmInterceptedMessage = (MitmInterceptedMessage) messageCacheObjectEntry.getValue().value;
+                list.append(mitmInterceptedMessage.getRequest().getMethod());
+                list.append(" ");
+                list.append(mitmInterceptedMessage.getRequest().getUrl());
+                list.append("\n");
+                messageCacheObjectEntry.getValue().lastAccessed = System.currentTimeMillis();
+            }
+            return list.toString();
+        }
+    }
+
+    // GET method
+    @SuppressWarnings("unchecked")
+    public String getListByKeyPart(K keyPart) {
+        synchronized (cacheMap) {
+            StringBuilder list = new StringBuilder();
+            for (Entry<K, MessageCacheObject<T>> messageCacheObjectEntry : cacheMap.entrySet()) {
+                if (messageCacheObjectEntry.getKey() instanceof String && keyPart instanceof String) {
+                    if (!((String) messageCacheObjectEntry.getKey()).contains((String) keyPart)) {
+                        continue;
+                    }
+                } else {
+                    if (!messageCacheObjectEntry.getKey().toString().contains(keyPart.toString())) {
+                        continue;
+                    }
+                }
+                MitmInterceptedMessage mitmInterceptedMessage = (MitmInterceptedMessage) messageCacheObjectEntry.getValue().value;
+                list.append(mitmInterceptedMessage.getRequest().getMethod());
+                list.append(" ");
+                list.append(mitmInterceptedMessage.getRequest().getUrl());
+                list.append("\n");
+                messageCacheObjectEntry.getValue().lastAccessed = System.currentTimeMillis();
+            }
+            return list.toString();
         }
     }
 
@@ -135,9 +198,7 @@ public class MessageCache<K, T> {
     }
 
     public void printKeys() {
-        cacheMap.forEach((url, message) -> {
-            System.out.println(url);
-        });
+        cacheMap.forEach((url, message) -> System.out.println(url));
     }
 
     // CLEANUP method

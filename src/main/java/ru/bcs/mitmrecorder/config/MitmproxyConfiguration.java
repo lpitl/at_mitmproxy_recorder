@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.Async;
 import ru.bcs.mitmrecorder.MessageCache;
 import ru.bcs.mitmrecorder.MitmInterceptedMessage;
 
@@ -38,12 +37,9 @@ public class MitmproxyConfiguration {
     @Value("${mitmproxy.store.path}")
     private String storePath;
 
-    @Autowired
-    private MitmproxyJava proxy;
-
     @Bean
-    MitmproxyJava mitmproxyInitialize() {
-        return new MitmproxyJava(mitmproxyPath, (InterceptedMessage message) -> {
+    MitmproxyJava mitmproxyInitializeAndRun() throws IOException, TimeoutException {
+        MitmproxyJava proxy = new MitmproxyJava(mitmproxyPath, (InterceptedMessage message) -> {
             System.out.println("Intercepted request for " + message.getRequest().getUrl());
 
             MitmInterceptedMessage customMessage = new MitmInterceptedMessage(message);
@@ -53,20 +49,10 @@ public class MitmproxyConfiguration {
             }
             return message;
         }, mitmproxyPort, null);
-    }
 
-    @Async
-    public void startProxy() throws InterruptedException {
-        try {
-            proxy.start();
-            while (proxy != null) {}
-        } catch (IOException | TimeoutException e) {
-            e.printStackTrace();
-        } finally {
-            if (proxy != null) {
-                proxy.stop();
-            }
-        }
+        proxy.start();
+
+        return proxy;
     }
 
     private void addObjectToMessageCache(Object serObj) {

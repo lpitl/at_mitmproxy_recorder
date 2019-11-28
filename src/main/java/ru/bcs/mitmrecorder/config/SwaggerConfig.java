@@ -37,7 +37,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
     }
 
     private ApiInfo apiInfo() {
-        return new ApiInfoBuilder().title("Mitmproxy Recorder API").version("0.2").build();
+        return new ApiInfoBuilder().title("Mitmproxy Recorder API").version("0.4").build();
     }
 
 }
